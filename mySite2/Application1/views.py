@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.template import loader
 from .models import application1
 
@@ -20,7 +21,35 @@ def viewTables(requests):
     }
     return HttpResponse(template1.render(context, requests))
 
-def addRecord(requests):
+def add(requests):
     template1 = loader.get_template("add.html")
     return HttpResponse(template1.render({}, requests))
-    
+
+def addrecord(requests):
+    x=requests.POST['first']
+    y=requests.POST['last']
+    member = application1(firstname=x, lastname=y)
+    member.save()
+    return HttpResponseRedirect(reverse('index'))
+
+def delete(requests, id):
+    member = application1.objects.get(id=id)
+    member.delete()
+    return HttpResponseRedirect(reverse('index'))
+
+def update(requests, id):
+    member = application1.objects.get(id=id)
+    template = loader.get_template("update.html")
+    context = {
+        'myMember': member
+    }
+    return HttpResponse(template.render(context, requests))
+
+def updateRecord(requests, id):
+    first = requests.POST['first']
+    last = requests.POST['last']
+    member = application1.objects.get(id=id)
+    member.firstname = first
+    member.lastname = last
+    member.save()
+    return HttpResponseRedirect(reverse('index'))
