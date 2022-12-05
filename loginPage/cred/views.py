@@ -21,7 +21,7 @@ def login(request):
             return redirect(login)
         else:
             messages.success(request=request, message='Login successful')
-            return redirect(login)
+            return redirect(index)
     else:
         return render(request, 'authentication/login.html')
 
@@ -39,8 +39,8 @@ def signup(request):
     else:
         return render(request, 'authentication/signup.html')
 
-def logout(request):
-    pass
+def viewusers(request):
+    return render(request, 'authentication/viewusers.html')
 
 def delete(request):
     if request.method == 'POST':

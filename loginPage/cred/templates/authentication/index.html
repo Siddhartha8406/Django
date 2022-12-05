@@ -1,12 +1,20 @@
 <html>
     <body>
+        {% if messages %}
+        {% for message in messages %}
+            
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
         <h2>Index page</h2>
         <button type="submit"><a href='login'> Login</button>
         <br>
         <button type="summit"><a href='signup'>Sign Up</button>
         <br>
-        <button type="submit"><a href='logout'>Sign out</button>
+        <button type="submit"><a href='viewusers'>View Users</button>
         <br>
-        <button type="submit"><a href='delete'>Delete</button>
+        <button type="submit"><a href='logout'>Sign out</button>
     </body>
 </html>
