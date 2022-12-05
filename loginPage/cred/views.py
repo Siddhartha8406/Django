@@ -17,10 +17,11 @@ def login(request):
         user = authenticate(request, username=x, password=y)
         print(user)
         if user==None:
-            return HttpResponseRedirect(reverse('SignupPage'))
+            messages.error(request=request, message='Bad Credentials')
+            return redirect(login)
         else:
-            login()
-            return HttpResponseRedirect(reverse('index'))
+            messages.success(request=request, message='Login successful')
+            return redirect(login)
     else:
         return render(request, 'authentication/login.html')
 
@@ -36,7 +37,7 @@ def signup(request):
         # messages.add_message(request, messages.SUCCESS, "Welcome " + userName)
         return HttpResponseRedirect(reverse('index'))
     else:
-        return HttpResponse(request, 'authentication/signup.html')
+        return render(request, 'authentication/signup.html')
 
 def logout(request):
     pass
@@ -45,7 +46,7 @@ def delete(request):
     if request.method == 'POST':
         userName = request.POST['username']
         print(userName)
-        user = User.objects.get(userName)
+        user = User.objects.get(username=userName)
         user.delete()
         return HttpResponseRedirect(reverse('index'))
     else:

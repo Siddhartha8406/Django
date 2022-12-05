@@ -1,6 +1,14 @@
 <html>
     <body>
         <h2>Login Page</h2>
+        {% if messages %}
+        {% for message in messages %}
+            
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
         <form action="login" method="post">
             {% csrf_token %}
             <label for="username">Username</label>
