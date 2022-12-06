@@ -1,12 +1,8 @@
 <html>
     <body>
-        {% if messages %}
-        {% for message in messages %}
-            
-            <div class="alert alert-danger" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
+        {% if request.user.is_authenticated %}
+            <h2>Welcome {{request.user.username}}
+                <button type="submit"><a href='logout'>logout</button>
         {% endif %}
         <h2>Index page</h2>
         <button type="submit"><a href='login'> Login</button>
@@ -15,6 +11,6 @@
         <br>
         <button type="submit"><a href='viewusers'>View Users</button>
         <br>
-        <button type="submit"><a href='logout'>Sign out</button>
+        <button type="submit"><a href='delete'>Delete User</button>
     </body>
 </html>

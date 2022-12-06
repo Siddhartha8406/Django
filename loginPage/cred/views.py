@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as loginUser
 from django.urls import reverse
 
 def index(request):
@@ -16,12 +17,11 @@ def login(request):
         y=request.POST['password']
         user = authenticate(request, username=x, password=y)
         print(user)
-        if user==None:
-            messages.error(request=request, message='Bad Credentials')
-            return redirect(login)
+        if user is not None:
+            loginUser(request, user)
+            return redirect('index')
         else:
-            messages.success(request=request, message='Login successful')
-            return redirect(index)
+            return redirect(login)
     else:
         return render(request, 'authentication/login.html')
 
@@ -51,3 +51,7 @@ def delete(request):
         return HttpResponseRedirect(reverse('index'))
     else:
         return render(request, 'authentication/delete_user.html')
+
+def logoutUser(request):
+    logout(request=request)
+    return redirect('index')
