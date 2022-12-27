@@ -34,7 +34,6 @@ def signup(request):
         
         user = User.objects.create_user(username= userName, password=pwd)
         user.save()
-        # messages.add_message(request, messages.SUCCESS, "Welcome " + userName)
         return HttpResponseRedirect(reverse('index'))
     else:
         return render(request, 'authentication/signup.html')
